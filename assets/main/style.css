@@ -561,7 +561,7 @@ button:hover {
     
     :root {
         --element-box-size: 22px; /* Smaller for table elements on small screens */
-        --pool-element-size: 45px; /* Still keep pool elements relatively large */
+        --pool-element-size: 70px; /* Still keep pool elements relatively large */
     }
     
     /* Scale down periodic table uniformly to fit small screens */
@@ -574,7 +574,7 @@ button:hover {
     .elements-pool {
         padding: 5px;
         gap: 5px;
-        min-height: 65px; /* Ensure pool has minimum height */
+        /* min-height: 65px; 
     }
     
     .elements-pool .element-symbol {
