@@ -146,6 +146,9 @@ function createElementCard(element) {
 
 function initializeTouchEvents(card) {
     let startX, startY;
+    let startTime;
+    let isDragging = false;
+    let longPressTimer;
     
     card.addEventListener('touchstart', function(e) {
         if (!isGameStarted || isGamePaused || isGameComplete) return;
@@ -153,15 +156,46 @@ function initializeTouchEvents(card) {
         const touch = e.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
+        startTime = Date.now();
         
-        // Create a visual feedback for touch
-        this.style.opacity = '0.7';
-        this.style.transform = 'scale(1.1)';
-    }, { passive: true });
+        // Start timer for long press
+        longPressTimer = setTimeout(() => {
+            isDragging = true;
+            // Create visual feedback for drag
+            this.style.opacity = '0.7';
+            this.style.transform = 'scale(1.1)';
+            
+            // Create a ghost image of the element
+            const ghost = this.cloneNode(true);
+            ghost.style.position = 'fixed';
+            ghost.style.left = touch.clientX - (this.offsetWidth / 2) + 'px';
+            ghost.style.top = touch.clientY - (this.offsetHeight / 2) + 'px';
+            ghost.style.pointerEvents = 'none';
+            ghost.style.zIndex = '1000';
+            ghost.id = 'drag-ghost';
+            document.body.appendChild(ghost);
+        }, 500); // 500ms for long press
+        
+    }, { passive: false });
 
     card.addEventListener('touchmove', function(e) {
+        if (!isDragging) {
+            // If not dragging, prevent scroll
+            e.preventDefault();
+            return;
+        }
+        
         e.preventDefault();
         const touch = e.touches[0];
+        
+        // Move the ghost image
+        const ghost = document.getElementById('drag-ghost');
+        if (ghost) {
+            ghost.style.left = touch.clientX - (this.offsetWidth / 2) + 'px';
+            ghost.style.top = touch.clientY - (this.offsetHeight / 2) + 'px';
+        }
+        
+        // Highlight potential drop targets
         const elementAtTouch = document.elementFromPoint(touch.clientX, touch.clientY);
         const slot = elementAtTouch?.closest('.element-slot');
         
@@ -174,22 +208,61 @@ function initializeTouchEvents(card) {
     });
 
     card.addEventListener('touchend', function(e) {
-        e.preventDefault();
+        // Clear the long press timer
+        clearTimeout(longPressTimer);
+        
+        const touch = e.changedTouches[0];
+        const timeElapsed = Date.now() - startTime;
         
         // Reset visual feedback
         this.style.opacity = '1';
         this.style.transform = '';
         
-        const touch = e.changedTouches[0];
-        const elementAtTouch = document.elementFromPoint(touch.clientX, touch.clientY);
-        const slot = elementAtTouch?.closest('.element-slot');
+        // Remove ghost image
+        const ghost = document.getElementById('drag-ghost');
+        if (ghost) {
+            ghost.remove();
+        }
         
-        if (slot) {
-            const event = new DragEvent('drop', {
-                dataTransfer: new DataTransfer()
-            });
-            event.dataTransfer.setData('text/plain', this.dataset.atomicNumber);
-            slot.dispatchEvent(event);
+        if (!isDragging && timeElapsed < 500) {
+            // This was a tap - show element details
+            e.preventDefault();
+            const element = elementsData.find(el => el.atomicNumber === parseInt(this.dataset.atomicNumber));
+            if (element) {
+                showElementDetails(element);
+            }
+        } else if (isDragging) {
+            // This was a drag - handle drop
+            e.preventDefault();
+            const elementAtTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+            const slot = elementAtTouch?.closest('.element-slot');
+            
+            if (slot) {
+                const event = new DragEvent('drop', {
+                    dataTransfer: new DataTransfer()
+                });
+                event.dataTransfer.setData('text/plain', this.dataset.atomicNumber);
+                slot.dispatchEvent(event);
+            }
+        }
+        
+        // Reset drag state
+        isDragging = false;
+        
+        // Clear all highlights
+        document.querySelectorAll('.element-slot').forEach(s => s.style.background = '');
+    });
+
+    card.addEventListener('touchcancel', function() {
+        clearTimeout(longPressTimer);
+        isDragging = false;
+        this.style.opacity = '1';
+        this.style.transform = '';
+        
+        // Remove ghost image
+        const ghost = document.getElementById('drag-ghost');
+        if (ghost) {
+            ghost.remove();
         }
         
         // Clear all highlights
