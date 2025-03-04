@@ -581,7 +581,7 @@ button:hover {
     .elements-pool {
         padding: 5px;
         gap: 5px;
-        /* min-height: 65px; 
+         /* min-height: 65px;  */
     }
     
     .elements-pool .element-symbol {
@@ -694,10 +694,28 @@ button:hover {
 
 /* Add at the end of your CSS file */
 #drag-ghost {
+    position: absolute;
+    width: var(--pool-element-size);
+    height: var(--pool-element-size);
     opacity: 0.8;
     pointer-events: none;
-    transform: scale(0.2);
+    transform: translate(-50%, -50%);
     transition: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    #drag-ghost {
+        width: var(--pool-element-size);
+        height: var(--pool-element-size);
+    }
+}
+
+@media (max-width: 480px) {
+    #drag-ghost {
+        width: 70px;
+        height: 70px;
+    }
 }
 

@@ -161,18 +161,14 @@ function initializeTouchEvents(card) {
         // Start timer for long press
         longPressTimer = setTimeout(() => {
             isDragging = true;
-            // Create visual feedback for drag
             this.style.opacity = '0.7';
-            this.style.transform = 'scale(1.1)';
             
-            // Create a ghost image of the element
+            // Create ghost with exact same content and style as original
             const ghost = this.cloneNode(true);
-            ghost.style.position = 'fixed';
-            ghost.style.left = touch.clientX - (this.offsetWidth / 2) + 'px';
-            ghost.style.top = touch.clientY - (this.offsetHeight / 2) + 'px';
-            ghost.style.pointerEvents = 'none';
-            ghost.style.zIndex = '1000';
             ghost.id = 'drag-ghost';
+            ghost.style.position = 'fixed';
+            ghost.style.left = `${touch.clientX}px`;
+            ghost.style.top = `${touch.clientY}px`;
             document.body.appendChild(ghost);
         }, 500); // 500ms for long press
         
@@ -180,7 +176,6 @@ function initializeTouchEvents(card) {
 
     card.addEventListener('touchmove', function(e) {
         if (!isDragging) {
-            // If not dragging, prevent scroll
             e.preventDefault();
             return;
         }
@@ -188,11 +183,11 @@ function initializeTouchEvents(card) {
         e.preventDefault();
         const touch = e.touches[0];
         
-        // Move the ghost image
+        // Update ghost position to follow touch point
         const ghost = document.getElementById('drag-ghost');
         if (ghost) {
-            ghost.style.left = touch.clientX - (this.offsetWidth / 2) + 'px';
-            ghost.style.top = touch.clientY - (this.offsetHeight / 2) + 'px';
+            ghost.style.left = `${touch.clientX}px`;
+            ghost.style.top = `${touch.clientY}px`;
         }
         
         // Highlight potential drop targets
