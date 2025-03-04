@@ -555,13 +555,10 @@ button:hover {
         flex: 1;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 5px;
     }
 
     .periodic-table {
-        transform: scale(0.7);
+        transform: scale(0.95);
         transform-origin: top center;
         margin: 0 auto;
         width: 100%;
