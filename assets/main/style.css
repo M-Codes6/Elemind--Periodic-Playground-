@@ -511,16 +511,18 @@ button:hover {
     }
 
     :root {
-        --element-box-size: 30px; /* Smaller for table elements on medium screens */
-        --pool-element-size: 50px; /* Keep pool elements larger */
+        --element-box-size: 35px; /* Smaller for table elements on medium screens */
+        --pool-element-size: 60px; /* Keep pool elements larger */
     }
     
     .periodic-table {
         /* Make entire table visible by scaling it down uniformly */
-        transform: scale(0.95);
+        transform: scale(0.7);
         transform-origin: top center;
         margin: 0 auto;
         overflow: visible; /* No scrolling */
+        display: grid;
+        justify-content: center;
     }
     
     .game-header {
@@ -546,6 +548,53 @@ button:hover {
         justify-content: flex-start;
         padding: 8px;
     }
+
+    .game-board-container {
+        height: auto;
+        min-height: 0;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 5px;
+    }
+
+    .periodic-table {
+        transform: scale(0.7);
+        transform-origin: top center;
+        margin: 0 auto;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 0;
+    }
+
+    .elements-pool {
+        padding: 15px;
+        gap: 12px;
+        height: auto;
+        min-height: 100px;
+        margin-top: 10px;
+    }
+
+    .elements-pool .element-card {
+        padding: 4px;
+    }
+
+    .elements-pool .element-symbol {
+        font-size: 1.3rem;
+    }
+
+    .elements-pool .element-name {
+        font-size: 0.8rem;
+        margin-top: 4px;
+    }
+
+    .elements-pool .element-number {
+        font-size: 0.9rem;
+    }
 }
 
 /* For very small screens */
@@ -560,15 +609,15 @@ button:hover {
     }
     
     :root {
-        --element-box-size: 22px; /* Smaller for table elements on small screens */
-        --pool-element-size: 45px; /* Still keep pool elements relatively large */
+        --element-box-size: 30px; /* Smaller for table elements on small screens */
+        --pool-element-size: 55px; /* Still keep pool elements relatively large */
     }
     
     /* Scale down periodic table uniformly to fit small screens */
     .periodic-table {
-        transform: scale(0.85);
+        transform: scale(0.55);
         transform-origin: top center;
-        margin: 0 auto;
+        margin: -100px auto; /* Adjust negative margin to compensate for scale */
     }
     
     .elements-pool {
@@ -610,18 +659,42 @@ button:hover {
         padding: 4px 8px;
         font-size: 0.75rem;
     }
+
+    :root {
+        --element-box-size: 24px;
+        --pool-element-size: 60px;
+    }
+
+    .periodic-table {
+        transform: scale(0.85);
+        transform-origin: top left;
+        padding: 5px;
+        margin: 0;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .elements-pool {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .game-board-container {
+        gap: 5px;
+    }
 }
 
 /* For extra small screens */
 @media (max-width: 350px) {
     :root {
-        --element-box-size: 18px; 
-        --pool-element-size: 40px; 
+        --element-box-size: 25px; 
+        --pool-element-size: 50px; 
     }
 
     /* Even smaller scale for tiny screens */
     .periodic-table {
-        transform: scale(0.8);
+        transform: scale(0.45);
+        margin: -120px auto; /* More negative margin for smaller screens */
     }
     
     .elements-pool .element-symbol {
@@ -682,6 +755,21 @@ button:hover {
     
     .timer-end-message .message-content {
         padding: 10px;
+    }
+}
+
+/* Add touch-specific styles */
+@media (hover: none) {
+    .element-card {
+        touch-action: none;
+    }
+
+    .element-slot {
+        touch-action: none;
+    }
+
+    .elements-pool {
+        -webkit-overflow-scrolling: touch;
     }
 }
 

@@ -137,8 +137,64 @@ function createElementCard(element) {
     card.addEventListener('dragstart', handleDragStart);
     card.addEventListener('dragend', handleDragEnd);
     card.addEventListener('click', () => showElementDetails(element));
+    
+    // Add touch events
+    initializeTouchEvents(card);
 
     return card;
+}
+
+function initializeTouchEvents(card) {
+    let startX, startY;
+    
+    card.addEventListener('touchstart', function(e) {
+        if (!isGameStarted || isGamePaused || isGameComplete) return;
+        
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+        
+        // Create a visual feedback for touch
+        this.style.opacity = '0.7';
+        this.style.transform = 'scale(1.1)';
+    }, { passive: true });
+
+    card.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const elementAtTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+        const slot = elementAtTouch?.closest('.element-slot');
+        
+        // Clear previous highlights
+        document.querySelectorAll('.element-slot').forEach(s => s.style.background = '');
+        
+        if (slot && !slot.querySelector('.element-card')) {
+            slot.style.background = 'rgba(52, 152, 219, 0.3)';
+        }
+    });
+
+    card.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        
+        // Reset visual feedback
+        this.style.opacity = '1';
+        this.style.transform = '';
+        
+        const touch = e.changedTouches[0];
+        const elementAtTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+        const slot = elementAtTouch?.closest('.element-slot');
+        
+        if (slot) {
+            const event = new DragEvent('drop', {
+                dataTransfer: new DataTransfer()
+            });
+            event.dataTransfer.setData('text/plain', this.dataset.atomicNumber);
+            slot.dispatchEvent(event);
+        }
+        
+        // Clear all highlights
+        document.querySelectorAll('.element-slot').forEach(s => s.style.background = '');
+    });
 }
 
 function handleDragStart(e) {
@@ -291,6 +347,9 @@ function resetGame() {
     // Reset counters to zero
     document.getElementById('placed-count').textContent = '0';
     document.getElementById('total-count').textContent = '0';
+
+    // Clear any remaining messages or overlays
+    clearMessages();
 }
 
 // Helper function to reset game state
@@ -364,16 +423,13 @@ function handleTimeUp() {
     isTimerExpired = true;
     clearInterval(timerInterval);
     
-    // Remove any existing message overlay
-    const existingOverlay = document.querySelector('.timer-end-message');
-    if (existingOverlay) {
-        existingOverlay.remove();
-    }
+    // Remove any existing message overlay before creating new one
+    clearMessages();
     
     // Create and show the timer end message
     const messageOverlay = document.createElement('div');
     messageOverlay.className = 'timer-end-message';
-    messageOverlay.style.opacity = '0'; // Start with 0 opacity
+    messageOverlay.style.opacity = '0';
     messageOverlay.innerHTML = `
         <div class="message-content">
             <p>End of the timer, but not the curiosity!</p>
@@ -382,7 +438,6 @@ function handleTimeUp() {
     
     document.body.appendChild(messageOverlay);
     
-    // Fade in animation
     requestAnimationFrame(() => {
         messageOverlay.style.transition = 'opacity 0.5s ease-in';
         messageOverlay.style.opacity = '1';
@@ -473,3 +528,30 @@ window.addEventListener('load', () => {
     timeRemaining = 0;
     updateTimer();
 });
+
+// Add new function to clear messages
+function clearMessages() {
+    // Clear timer end message
+    const timerMessage = document.querySelector('.timer-end-message');
+    if (timerMessage) {
+        timerMessage.remove();
+    }
+
+    // Clear level complete modal
+    const levelComplete = document.getElementById('level-complete');
+    if (levelComplete) {
+        levelComplete.style.display = 'none';
+    }
+
+    // Clear overlay
+    const overlay = document.getElementById('overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+    }
+
+    // Clear feedback message
+    const feedback = document.getElementById('feedback');
+    if (feedback) {
+        feedback.style.opacity = '0';
+    }
+}
