@@ -1,0 +1,121 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Periodic Table</title>
+</head>
+<body>
+
+    <header>
+        <h1>⚛️ Periodic Playground</h1>
+    </header>
+
+    <!-- Game Container -->
+    <div class="game-container">
+        <!-- Game Header -->
+        <div class="game-header">
+            <div class="game-info">
+                <div class="info-item">
+                    <span class="info-label">Score</span>
+                    <span class="info-value" id="score">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Time</span>
+                    <span class="info-value" id="timer">00:00</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Elements</span>
+                    <span class="info-value"><span id="placed-count">0</span>/<span id="total-count">0</span></span>
+                </div>
+            </div>
+            <div class="controls">
+                <select id="level-select">
+                    <option value="1">Level 1: Basic Elements (30)</option>
+                    <option value="2">Level 2: Intermediate (60)</option>
+                    <option value="3">Level 3: Advanced (90)</option>
+                    <option value="4">Level 4: Master (All 118)</option>
+                </select>
+                <button id="start-btn">Start</button>
+                <button id="reset-btn">Reset</button>
+            </div>
+        </div>
+
+        <!-- Game Board Container -->
+        <div class="game-board-container">
+            <!-- Legend Section (moved inside game board container for better layout) -->
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color alkali-metals"></div>
+                    <span>Alkali Metals</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color alkaline-earth-metals"></div>
+                    <span>Alkaline Earth</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color transition-metals"></div>
+                    <span>Transition Metals</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color post-transition-metals"></div>
+                    <span>Post-Transition</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color metalloids"></div>
+                    <span>Metalloids</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color nonmetals"></div>
+                    <span>Nonmetals</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color halogens"></div>
+                    <span>Halogens</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color noble-gases"></div>
+                    <span>Noble Gases</span>
+                </div>
+            </div>
+
+            <div class="periodic-table" id="periodic-table"></div>
+            <div class="elements-pool" id="elements-pool"></div>
+        </div>
+    </div>
+
+    <!-- Element Detail Popup -->
+    <div class="element-detail" id="element-detail">
+        <div class="detail-header">
+            <div class="detail-title">
+                <div class="detail-symbol" id="detail-symbol"></div>
+                <div class="detail-info">
+                    <div class="detail-name" id="detail-name"></div>
+                    <div class="detail-number" id="detail-number"></div>
+                </div>
+            </div>
+            <button class="close-detail" id="close-detail">×</button>
+        </div>
+        <div class="detail-properties" id="detail-properties"></div>
+        <div class="detail-description" id="detail-description"></div>
+    </div>
+
+    <!-- Level Complete Modal -->
+    <div class="level-complete" id="level-complete">
+        <h2>Level Complete! 🎉</h2>
+        <p>Congratulations! You've successfully completed this level.</p>
+        <p>Your score: <span id="final-score">0</span></p>
+        <p>Time taken: <span id="final-time">00:00</span></p>
+        <button id="next-level-btn">Next Level</button>
+        <button id="replay-btn">Replay</button>
+    </div>
+
+    <!-- Overlay and Feedback -->
+    <div class="overlay" id="overlay"></div>
+    <div class="feedback" id="feedback"></div>
+
+    <!-- Script -->
+    <script type="module" src="./script.js"></script>
+</body>
+</html>
