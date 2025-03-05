@@ -2,7 +2,7 @@
 
 **Elemind** is an interactive periodic table web app designed to help students learn and memorize element positions through an engaging drag-and-drop interface. With a responsive design, Elemind delivers an optimal experience across desktops, tablets, and smartphones.
 
-**Live Link** : elemind.vercel.app
+**Live Link** : https://elemind.vercel.app/
 
 ## Features
 
