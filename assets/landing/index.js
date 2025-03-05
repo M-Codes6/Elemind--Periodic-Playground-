@@ -1,4 +1,3 @@
-// Update the slogan JavaScript code
 const slogan = document.getElementById('slogan');
 const slogans = [
     "Learn Elements the Smart Way!",
@@ -39,15 +38,12 @@ function updateSlogan() {
 // Start the slogan rotation
 setInterval(updateSlogan, 8000);
 
-// Initial setup
 slogan.setAttribute('data-text', slogans[0]);
 updateSlogan();
 
-// Replace existing particle creation code with this:
 const particles = document.querySelector('.particles');
 const particleCount = 16;
 
-// Common elements for educational context
 const elements = [
     { symbol: 'H', name: 'Hydrogen' },
     { symbol: 'He', name: 'Helium' },
@@ -67,7 +63,7 @@ const elements = [
     { symbol: 'Al', name: 'Aluminum'}
 ];
 
-// Update particle creation code
+//  particle creation 
 const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -76,27 +72,22 @@ const shuffleArray = array => {
     return array;
 };
 
-// Shuffle elements array
 const shuffledElements = shuffleArray([...elements]);
 
-// Update the particle creation code
 for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     particle.className = 'element-particle';
     
-    // Add element symbol and data attribute for tooltip
     particle.textContent = shuffledElements[i].symbol;
     particle.setAttribute('data-name', shuffledElements[i].name);
     
-    // Improved positioning to avoid center content
     let x, y;
     const angle = (i / particleCount) * 2 * Math.PI;
     const centerX = 50;
     const centerY = 50;
     
-    // Create a larger radius for better distribution
-    const minRadius = 35; // Minimum distance from center
-    const maxRadius = 45; // Maximum distance from center
+    const minRadius = 35; 
+    const maxRadius = 45; 
     const radius = minRadius + (Math.random() * (maxRadius - minRadius));
     
     // Calculate position
@@ -104,13 +95,12 @@ for (let i = 0; i < particleCount; i++) {
     y = centerY + radius * Math.sin(angle);
     
     // Ensure particles stay within container bounds
-    x = Math.max(10, Math.min(90, x)); // Keep 10% margin from edges
+    x = Math.max(10, Math.min(90, x)); 
     y = Math.max(10, Math.min(90, y));
     
     particle.style.left = `${x}%`;
     particle.style.top = `${y}%`;
     
-    // Random animation delay
     particle.style.animationDelay = `${Math.random() * 5}s`;
     
     // Add hover effect handler
