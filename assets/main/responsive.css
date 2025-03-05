@@ -1,0 +1,147 @@
+@media (max-width: 768px) {
+  .game-container {
+    height: calc(100vh - 70px);
+  }
+
+  :root {
+    --element-box-size: 30px;
+    --pool-element-size: 50px;
+  }
+
+  .periodic-table {
+    transform: scale(0.95);
+    transform-origin: top center;
+    margin: 0 auto;
+    overflow: visible; /* No scrolling */
+  }
+
+  .game-header {
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .game-info {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .elements-pool {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 8px;
+  }
+
+  .timer-end-message {
+    width: min(95%, 350px);
+    padding: 20px;
+  }
+
+  #drag-ghost {
+    width: var(--pool-element-size);
+    height: var(--pool-element-size);
+  }
+}
+
+
+
+
+@media (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+
+  .game-container {
+    height: calc(100vh - 50px);
+    gap: 5px;
+  }
+
+  :root {
+    --element-box-size: 22px;
+    --pool-element-size: 70px;
+  }
+
+  .periodic-table {
+    transform: scale(0.85);
+    transform-origin: top center;
+    margin: 10px 10px;
+  }
+
+  .elements-pool {
+    padding: 5px;
+    gap: 5px;
+  }
+
+  .elements-pool .element-symbol {
+    font-size: 1.1rem;
+  }
+
+  .elements-pool .element-name {
+    font-size: 0.65rem;
+    display: block;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  h2 {
+    font-size: 0.9rem;
+  }
+
+  .game-header {
+    padding: 5px;
+  }
+
+  .info-value {
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  .timer-end-message {
+    width: min(98%, 300px);
+    padding: 15px;
+  }
+
+  .timer-end-message .message-content {
+    padding: 10px;
+  }
+
+  #drag-ghost {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+
+
+
+
+@media (max-width: 350px) {
+  :root {
+    --element-box-size: 18px;
+    --pool-element-size: 40px;
+  }
+
+  .periodic-table {
+    transform: scale(0.8);
+  }
+
+  .elements-pool .element-symbol {
+    font-size: 1rem;
+  }
+
+  .elements-pool .element-name {
+    font-size: 0.6rem;
+  }
+}
