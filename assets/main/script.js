@@ -11,29 +11,41 @@ let isGameComplete = false;
 
 const levelConfig = {
   1: {
-    elements: 30,
+    elements: 10,
+    time: 60,
+    startElement: 1,
+    endElement: 10,
+  },
+  2: {
+    elements: 20,
     time: 120,
+    startElement: 1,
+    endElement: 20,
+  },
+  3: {
+    elements: 30,
+    time: 180,
     startElement: 1,
     endElement: 30,
   },
-  2: {
+  4: {
     elements: 60,
     time: 240,
     startElement: 1,
     endElement: 60,
   },
-  3: {
+  5: {
     elements: 90,
-    time: 360,
+    time: 300,
     startElement: 1,
     endElement: 90,
   },
-  4: {
+  6: {
     elements: 118,
-    time: 480,
+    time: 360,
     startElement: 1,
     endElement: 118,
-  },
+  }
 };
 
 // Initialize UI elements
@@ -97,17 +109,12 @@ function createElementsPool(level) {
   const config = levelConfig[level];
 
   // Get elements based on level
-  let levelElements;
-  if (level === 4) {
-    levelElements = elementsData;
-  } else {
-    levelElements = elementsData
-      .filter((element) => element.atomicNumber <= config.elements)
-      .filter(
-        (element) =>
-          element.group !== "lanthanide" && element.group !== "actinide"
-      );
-  }
+  const levelElements = elementsData
+    .filter((element) => element.atomicNumber <= config.elements)
+    .filter(
+      (element) =>
+        element.group !== "lanthanide" && element.group !== "actinide"
+    );
 
   const shuffled = [...levelElements].sort(() => Math.random() - 0.5);
 
