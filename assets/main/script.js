@@ -543,7 +543,11 @@ function checkLevelComplete() {
   // Get the total slots that should be filled for this level
   const config = levelConfig[currentLevel];
   const levelElements = elementsData
-    .filter((element) => element.atomicNumber <= config.elements)
+    .filter(
+      (element) => 
+        element.atomicNumber >= config.startElement && 
+        element.atomicNumber <= config.endElement
+    )
     .filter(
       (element) =>
         element.group !== "lanthanide" && element.group !== "actinide"
