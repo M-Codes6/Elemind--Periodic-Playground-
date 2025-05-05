@@ -545,7 +545,7 @@ function checkLevelComplete() {
   const levelElements = elementsData
     .filter(
       (element) => 
-        element.atomicNumber >= config.startElement && 
+        element.atomicNumber >= config.startElement &&
         element.atomicNumber <= config.endElement
     )
     .filter(
