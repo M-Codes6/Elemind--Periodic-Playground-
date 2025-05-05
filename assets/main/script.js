@@ -18,32 +18,32 @@ const levelConfig = {
   },
   2: {
     elements: 20,
-    time: 120,
-    startElement: 1,
+    time: 60,
+    startElement: 10,
     endElement: 20,
   },
   3: {
     elements: 30,
-    time: 180,
-    startElement: 1,
+    time: 60,
+    startElement: 20,
     endElement: 30,
   },
   4: {
     elements: 60,
-    time: 240,
-    startElement: 1,
+    time: 120,
+    startElement: 30,
     endElement: 60,
   },
   5: {
     elements: 90,
-    time: 300,
-    startElement: 1,
+    time: 120,
+    startElement: 60,
     endElement: 90,
   },
   6: {
     elements: 118,
-    time: 360,
-    startElement: 1,
+    time: 120,
+    startElement: 90,
     endElement: 118,
   }
 };
