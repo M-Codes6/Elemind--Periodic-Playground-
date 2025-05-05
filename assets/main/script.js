@@ -399,7 +399,7 @@ function startGame() {
   timeRemaining = config.time;
 
   // Update UI
-  updateScore();
+  updateScore();  
   updateTimer();
 
   // Create element pool based on selected level
@@ -645,3 +645,4 @@ function clearMessages() {
     feedback.style.opacity = "0";
   }
 }
+
