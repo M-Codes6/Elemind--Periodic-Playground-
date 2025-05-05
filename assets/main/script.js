@@ -137,7 +137,7 @@ function createElementCard(element) {
   card.dataset.atomicNumber = element.atomicNumber;
 
   card.innerHTML = `
-        <span class="element-number">${element.atomicNumber}</span>
+        <!-- <span class="element-number">${element.atomicNumber}</span> -->
         <span class="element-symbol">${element.symbol}</span>
         <span class="element-name">${element.name}</span>
     `;
