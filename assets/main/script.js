@@ -110,7 +110,11 @@ function createElementsPool(level) {
 
   // Get elements based on level
   const levelElements = elementsData
-    .filter((element) => element.atomicNumber <= config.elements)
+    .filter(
+      (element) => 
+        element.atomicNumber >= config.startElement && 
+        element.atomicNumber <= config.endElement
+    )
     .filter(
       (element) =>
         element.group !== "lanthanide" && element.group !== "actinide"
@@ -223,7 +227,7 @@ function initializeTouchEvents(card) {
     this.style.transform = "";
 
     // Remove ghost image
-    const ghost = document.getElementById("drag-ghost");
+    const ghost = document.getElementById("drag-ghost")
     if (ghost) {
       ghost.remove();
     }
