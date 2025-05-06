@@ -356,23 +356,23 @@ function showElementDetails(element) {
   document.getElementById(
     "detail-number"
   ).textContent = `Atomic Number: ${element.atomicNumber}`;
-
+  
   const properties = element.properties || element.details;
   document.getElementById("detail-properties").innerHTML = `
-        <div class="property">
-            <span class="property-label">Atomic Mass</span>
-            <span class="property-value">${properties.atomicMass}</span>
-        </div>
-        <div class="property">
-            <span class="property-label">Valency</span>
-            <span class="property-value">${properties.valency}</span>
-        </div>
+  <div class="property">
+  <span class="property-label">Atomic Mass</span>
+  <span class="property-value">${properties.atomicMass}</span>
+  </div>
+  <div class="property">
+  <span class="property-label">Valency</span>
+  <span class="property-value">${properties.valency}</span>
+  </div>
     `;
 
-  document.getElementById("detail-description").textContent =
+    document.getElementById("detail-description").textContent =
     element.description;
-
-  detail.style.display = "block";
+    
+    detail.style.display = "block";
   overlay.style.display = "block";
 
   document.getElementById("close-detail").onclick = () => {
@@ -384,7 +384,7 @@ function showElementDetails(element) {
 // startGame function to handle both start and restart without changing button text
 function startGame() {
 
-    if (isGameStarted) {
+  if (isGameStarted) {
     resetGameState();
   }
 
@@ -392,19 +392,19 @@ function startGame() {
   isGameStarted = true;
   isGameComplete = false;
   isTimerExpired = false;
-
+  
   currentScore = 0;
-
+  
   const config = levelConfig[currentLevel];
   timeRemaining = config.time;
 
   // Update UI
   updateScore();  
   updateTimer();
-
+  
   // Create element pool based on selected level
   createElementsPool(currentLevel);
-
+  
   startTimer();
 
   document.getElementById("level-select").disabled = true;
@@ -417,17 +417,17 @@ function resetGame() {
   }
 
   resetGameState();
-
+  
   // Enable level selection
   document.getElementById("level-select").disabled = false;
-
+  
   // Reset level to 1
   document.getElementById("level-select").value = "1";
   currentLevel = 1;
-
+  
   // Clear the elements pool
   document.getElementById("elements-pool").innerHTML = "";
-
+  
   document.getElementById("placed-count").textContent = "0";
   document.getElementById("total-count").textContent = "0";
 
@@ -440,16 +440,16 @@ function resetGameState() {
   isGameStarted = false;
   isGameComplete = false;
   isTimerExpired = false;
-
+  
   // Reset score and timer
   currentScore = 0;
   timeRemaining = 0;
   clearInterval(timerInterval);
-
+  
   // Update UI
   updateScore();
   updateTimer();
-
+  
   // Reset the periodic table
   createPeriodicTable();
 }
@@ -471,10 +471,10 @@ function updateCounters() {
   if (!isGameStarted) {
     return;
   }
-
+  
   // Get elements based on current level's configuration
   const config = levelConfig[currentLevel];
-
+  
   // Get number of slots that should be filled in the periodic table for this level
   const levelElements = elementsData
     .filter((element) => element.atomicNumber <= config.elements)
@@ -483,14 +483,14 @@ function updateCounters() {
         element.group !== "lanthanide" && element.group !== "actinide"
     );
 
-  const total = levelElements.length;
-  const placed = document.querySelectorAll(".element-slot.filled").length;
+    const total = levelElements.length;
+    const placed = document.querySelectorAll(".element-slot.filled").length;
 
-  document.getElementById("placed-count").textContent = placed;
-  document.getElementById("total-count").textContent = total;
-}
-
-// Update startTimer function to use level-specific time
+    document.getElementById("placed-count").textContent = placed;
+    document.getElementById("total-count").textContent = total;
+  }
+  
+  // Update startTimer function to use level-specific time
 function startTimer() {
   clearInterval(timerInterval);
   updateTimer();
@@ -508,26 +508,26 @@ function startTimer() {
 function handleTimeUp() {
   isTimerExpired = true;
   clearInterval(timerInterval);
-
+  
   clearMessages();
-
+  
   // Create and show the timer end message
   const messageOverlay = document.createElement("div");
   messageOverlay.className = "timer-end-message";
   messageOverlay.style.opacity = "0";
   messageOverlay.innerHTML = `
-        <div class="message-content">
-            <p>End of the timer, but not the curiosity!</p>
-        </div>
-    `;
-
+  <div class="message-content">
+  <p>End of the timer, but not the curiosity!</p>
+  </div>
+  `;
+  
   document.body.appendChild(messageOverlay);
-
+  
   requestAnimationFrame(() => {
     messageOverlay.style.transition = "opacity 0.5s ease-in";
     messageOverlay.style.opacity = "1";
   });
-
+  
   showFeedback("Time's up!", false);
 }
 
@@ -543,19 +543,19 @@ function checkLevelComplete() {
   // Get the total slots that should be filled for this level
   const config = levelConfig[currentLevel];
   const levelElements = elementsData
-    .filter(
+  .filter(
       (element) => 
         element.atomicNumber >= config.startElement &&
-        element.atomicNumber <= config.endElement
+      element.atomicNumber <= config.endElement
     )
     .filter(
       (element) =>
         element.group !== "lanthanide" && element.group !== "actinide"
     );
-
+    
   const totalSlots = levelElements.length;
   const filledSlots = document.querySelectorAll(".element-slot.filled").length;
-
+  
   if (filledSlots === totalSlots) {
     showLevelComplete();
   }
@@ -585,7 +585,7 @@ function showLevelComplete() {
       document.getElementById("level-select").disabled = true; 
       modal.style.display = "none";
       document.getElementById("overlay").style.display = "none";
-
+      
       resetGameState();
       startGame();
     };
@@ -603,10 +603,10 @@ function handleLevelChange(e) {
     showFeedback("Please finish or reset the current game first", false);
     return;
   }
-
+  
   const selectedLevel = parseInt(e.target.value);
   currentLevel = selectedLevel;
-
+  
   
 }
 
@@ -621,7 +621,7 @@ window.addEventListener("load", () => {
 
 // Add new function to clear messages
 function clearMessages() {
-
+  
     const timerMessage = document.querySelector(".timer-end-message");
   if (timerMessage) {
     timerMessage.remove();
@@ -632,7 +632,7 @@ function clearMessages() {
   if (levelComplete) {
     levelComplete.style.display = "none";
   }
-
+  
   // Clear overlay
   const overlay = document.getElementById("overlay");
   if (overlay) {
@@ -646,3 +646,21 @@ function clearMessages() {
   }
 }
 
+
+  //  Toggle dark-light mode
+
+const toggleBtn = document.getElementById("mode-toggle");
+const modeImg = document.getElementById("mode-img");
+
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
+  // Switch icons based on mode
+  if (document.body.classList.contains("dark-mode")) {
+    modeImg.src = "/images/sun.svg";
+    modeImg.alt = "Sun icon";
+  } else {
+    modeImg.src = "/images/moon.svg";
+    modeImg.alt = "Moon icon";
+  }
+});

@@ -565,3 +565,31 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
+
+
+
+/* Toggle button */
+#mode-toggle {
+  background: #dfdfdf;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Dark mode overrides */
+.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+.dark-mode header,
+.dark-mode .game-container,
+.dark-mode .legend-item,
+.dark-mode .element-detail,
+.dark-mode .level-complete {
+  background-color: #121212;
+  color: #ffffff;
+}
+
